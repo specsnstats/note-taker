@@ -3,7 +3,8 @@ const path = require("path");
 const app = express();
 const db = require("./db/db.json")
 const generateUUId = require("unique-identifier")
-console.log(db)
+const fs = require("fs")
+// console.log(db)
 
 const PORT = 3000;
 
@@ -24,6 +25,16 @@ app.get("/api/notes/", (req, res)=>{
     res.sendFile(path.join(__dirname, `./db/db.json`))
 })
 
+app.delete("/api/notes/:id", (req,res)=>{
+    console.log(req.params)
+    const id = req.params.id
+    const newList = db.filter(note=> note.id != id)
+    console.log(newList)
+    fs.writeFileSync("./db/db.json", JSON.stringify(newList,null,4))
+
+    res.json({"notes": "deletes"})
+})
+
 app.post("/api/notes", (req, res)=>{
     console.log(req.body);
     uniqueVal = generateUUId()
@@ -34,7 +45,8 @@ app.post("/api/notes", (req, res)=>{
     }
     db.push(newNote)
     console.log(db)
-    res.send("Oh Hi! I didn't see you there!")
+    fs.writeFileSync("./db/db.json", JSON.stringify(db,null,4))
+    res.send("I did the thing...")
 })
 
 app.listen( PORT, ()=>{
