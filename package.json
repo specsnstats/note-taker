@@ -18,9 +18,9 @@
   },
   "homepage": "https://github.com/specsnstats/note-taker#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "unique-identifier": "^1.0.0"
   },
   "devDependencies": {
-    "unique-identifier": "^1.0.0"
   }
 }
